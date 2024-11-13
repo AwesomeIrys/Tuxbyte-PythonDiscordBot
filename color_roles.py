@@ -21,7 +21,7 @@ COLOR_NAMES = {
 }
 
 # Fallback color to avoid black (#000000)
-FALLBACK_COLOR = "#1D1D1D"
+FALLBACK_COLOR = "#000001"
 
 # Function to allow users to change their color
 async def change_color(ctx, color: str):
