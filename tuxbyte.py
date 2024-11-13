@@ -6,6 +6,7 @@ import mysql.connector
 from db import get_db_cursor, close_db_connection  # Import the function to get the connection and cursor
 # Import the ping command from ping.py
 from ping import ping
+from color_roles import change_color
 
 # Load environment variables from .env file
 load_dotenv()
@@ -31,6 +32,10 @@ async def on_ready():
     activity = discord.Game(f"!help")
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f'{bot.user} has connected to Discord!')
+
+@bot.command(name="changecolor", help="Change your name color by providing a hex color (e.g., #FF5733).")
+async def changecolor_cmd(ctx, color: str):
+    await change_color(ctx, color)
 
 # Register the ping command
 @bot.command(name="ping", help="Check the bot's latency, uptime, and server/user stats.")
