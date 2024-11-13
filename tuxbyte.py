@@ -17,7 +17,7 @@ db, cursor = get_db_cursor()
 TOKEN = os.getenv("BOT_TOKEN")
 PREFIX = os.getenv("BOT_PREFIX")
 
-bot = commands.Bot(command_prefix=PREFIX, help_command=None, intents=intents)
+bot = commands.Bot(command_prefix=PREFIX, help_command=None, intents=discord.Intents.all())
 
 # Set intents to access members and messages
 intents = discord.Intents.default()
