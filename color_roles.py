@@ -16,7 +16,11 @@ COLOR_NAMES = {
     "orange": "#FFA500",
     "black": "#000000",
     "white": "#FFFFFF",
+    "light blue": "#157efb",
 }
+
+# Fallback color to avoid black (#000000)
+FALLBACK_COLOR = "#1D1D1D"
 
 # Function to allow users to change their color
 async def change_color(ctx, color: str):
@@ -28,6 +32,10 @@ async def change_color(ctx, color: str):
     if not HEX_COLOR_REGEX.match(color):
         await ctx.send("Invalid color! Please provide a valid hex code (e.g., #FF5733) or color name (e.g., pink, red).")
         return
+
+    # If the color is black (#000000), set it to the fallback color
+    if color == "#000000":
+        color = FALLBACK_COLOR
 
     # Convert the hex color to an integer for Discord's color format
     color_value = int(color[1:], 16)
@@ -71,3 +79,4 @@ async def change_color(ctx, color: str):
     for role in ctx.author.roles:
         if role != existing_role and role.name.endswith("Color") and role != ctx.guild.default_role and role != new_role:
             await role.delete(reason="Cleanup of previous color role")
+
