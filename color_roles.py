@@ -17,6 +17,7 @@ COLOR_NAMES = {
     "black": "#000000",
     "white": "#FFFFFF",
     "light blue": "#157efb",
+    # Add more colors if needed
 }
 
 # Fallback color to avoid black (#000000)
@@ -30,7 +31,7 @@ async def change_color(ctx, color: str):
 
     # Check if the color is a valid hex code
     if not HEX_COLOR_REGEX.match(color):
-        await ctx.send("Invalid color! Please provide a valid hex code (e.g., #FF5733) or color name (e.g., pink, red).")
+        await ctx.author.send("Invalid color! Please provide a valid hex code (e.g., #FF5733) or color name (e.g., pink, red).")
         return
 
     # If the color is black (#000000), set it to the fallback color
@@ -46,7 +47,7 @@ async def change_color(ctx, color: str):
     if existing_role:
         # Update the existing role with the new color
         await existing_role.edit(color=discord.Color(color_value))
-        await ctx.send(f"Your color has been updated to {color}!")
+        await ctx.author.send(f"Your color has been updated to {color}!")  # Send a DM (whisper)
     else:
         # Create a new role with the specified color if one does not exist
         try:
@@ -58,7 +59,7 @@ async def change_color(ctx, color: str):
 
             # Ensure the bot has the necessary permissions
             if not ctx.guild.me.guild_permissions.manage_roles:
-                await ctx.send("I do not have permission to manage roles.")
+                await ctx.author.send("I do not have permission to manage roles.")
                 return
 
             # Get the user's highest role
@@ -69,14 +70,13 @@ async def change_color(ctx, color: str):
 
             # Add the newly created role to the user
             await ctx.author.add_roles(new_role)
-            await ctx.send(f"Your color has been set to {color}.")
+            await ctx.author.send(f"Your color has been set to {color}.")  # Send a DM (whisper)
 
         except discord.Forbidden:
-            await ctx.send("I do not have permission to create roles.")
+            await ctx.author.send("I do not have permission to create roles.")
             print("Bot does not have permission to create roles.")
     
     # Remove old color roles ONLY if they are not the newly created role
     for role in ctx.author.roles:
         if role != existing_role and role.name.endswith("Color") and role != ctx.guild.default_role and role != new_role:
             await role.delete(reason="Cleanup of previous color role")
-
