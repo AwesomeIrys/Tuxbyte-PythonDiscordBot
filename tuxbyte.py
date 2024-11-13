@@ -32,6 +32,11 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f'{bot.user} has connected to Discord!')
 
+# Register the ping command
+@bot.command(name="ping", help="Check the bot's latency, uptime, and server/user stats.")
+async def ping_command(ctx):
+    await ping(ctx)
+
 # Error handling for invalid commands
 @bot.event
 async def on_command_error(ctx, error):
