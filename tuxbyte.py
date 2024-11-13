@@ -28,7 +28,7 @@ intents.members = True
 # Event when bot is ready
 @bot.event
 async def on_ready():
-    activity = discord.Game(f"Listening to my owner")
+    activity = discord.Game(f"!help")
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f'{bot.user} has connected to Discord!')
 
